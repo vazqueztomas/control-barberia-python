@@ -32,8 +32,8 @@ def add_corte():
   fecha = datetime.now().strftime("%Y-%m-%d")
   fecha = str(fecha)
   
-  increment_id = read_query(connection, "select * from cortes")
-  increment_id = increment_id[-1][0] + 1
+  increment_id = read_query(connection, "select id from cortes")
+  increment_id = increment_id + 1
 
 
   add_query = f"""
@@ -43,14 +43,6 @@ def add_corte():
   
   execute_query(connection, add_query)
   print('add succesfull')
-
-def get_total_cortes():
-  results = read_query(connection, "select * from cortes")
-  total = 0
-  for result in results:
-    total += result[1]
-  return total
-  
 
 def get_all_cortes():
   results = read_query(connection, "select * from cortes")
@@ -66,8 +58,8 @@ def search_by_date(fecha):
     print(result)
 
 def get_cantidad_cortes(fecha):
-  results = read_query(connection, f"select * from cortes where fecha ='{fecha}'")
-  print(f'El dia {fecha} se realizaron {results[-1][0]} cortes')
+  cantidad_cortes = read_query(connection, f"select id from cortes where fecha ='{fecha}'")
+  print(f'El dia {fecha} se realizaron {cantidad_cortes[-1][0]} cortes')
 
 
 search_by_date('2023-09-11')
